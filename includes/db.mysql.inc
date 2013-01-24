@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\Core\Database\Database;
 
 /**
  * Get the sql dump file. 

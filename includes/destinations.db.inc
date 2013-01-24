@@ -6,6 +6,9 @@
  * Functions to handle the direct to database destination.
  */
 
+
+use Drupal\Core\Database\Database;
+
 /**
  * A destination type for saving to a database server.
  *
