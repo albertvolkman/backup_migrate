@@ -241,9 +241,16 @@ class backup_migrate_destination_files extends backup_migrate_destination {
   function test_file_readable_remotely($path, $contents) {
     $url = file_create_url($path);
     // TODO: Proper checking for absolute paths.
-    $result = drupal_http_request($url);
-    if (!empty($result->data) && strpos($result->data, $contents) !== FALSE) {
-      return TRUE;
+    try {
+      $request = Drupal::httpClient()->get($url);
+      $response = $request->send();
+      // Expected result.
+      if (!empty($result->data) && strpos($result->data, $contents) !== FALSE) {
+        return TRUE;
+      }
+    }
+    catch (Exception $e) {
+      return FALSE;
     }
     return FALSE;
   }
