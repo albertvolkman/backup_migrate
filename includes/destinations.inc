@@ -102,7 +102,8 @@ function backup_migrate_backup_migrate_destinations() {
 
   // Add the default, out of the box destinations for new users.
   if (variable_get('backup_migrate_allow_backup_to_file', TRUE)) {
-    if (variable_get('file_private_path', FALSE)) {
+    $config = config('system.file');
+    if ($file_private_path = $config->get('path.private')) {
       $out['manual']    = backup_migrate_create_destination('file_manual', array('destination_id' => 'manual'));
       $out['scheduled'] = backup_migrate_create_destination('file_scheduled', array('destination_id' => 'scheduled'));
     }
