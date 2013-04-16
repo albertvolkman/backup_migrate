@@ -4,14 +4,14 @@ Drupal.backup_migrate = {
   callbackURL : "",  
   autoAttach  : function() {
     if (Drupal.settings.backup_migrate !== undefined) {
-      if ($("#edit-save-settings").length && !$("#edit-save-settings").attr("checked")) {
+      if ($("#edit-save-settings").length && !$("#edit-save-settings").is(":checked")) {
         // Disable input and hide its description.
         // Set display none instead of using hide(), because hide() doesn't work when parent is hidden.
         $('div.backup-migrate-save-options').css('display', 'none');
       }
   
       $("#edit-save-settings").bind("click", function() {
-        if (!$("#edit-save-settings").attr("checked")) {
+        if (!$("#edit-save-settings").is(":checked")) {
           $("div.backup-migrate-save-options").slideUp('slow');
         }
         else {
@@ -39,14 +39,14 @@ Drupal.backup_migrate = {
     $('option', $select).each(function(i) {
       var self = this;
       $box = $('<input type="checkbox" class="backup-migrate-tables-checkbox">').bind('change click', function() {
-        $select.find('option[value="'+self.value+'"]').attr('selected', this.checked);
+        $select.find('option[value="'+self.value+'"]').prop('selected', this.checked);
         if (this.checked) {
           $(this).parent().addClass('checked');
         }
         else {
           $(this).parent().removeClass('checked');
         }
-      }).attr('checked', this.selected ? 'checked' : '');
+      }).prop('checked', this.selected ? 'checked' : '');
       $checkboxes.append($('<div class="form-item"></div>').append($('<label class="option backup-migrate-table-select">'+this.value+'</label>').prepend($box)));
     });
     $select.parent().find('.backup-migrate-checkbox-link').remove();
