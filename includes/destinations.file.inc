@@ -122,10 +122,9 @@ class backup_migrate_destination_files extends backup_migrate_destination {
       "#description" => t('Enter the path to the directory to save the backups to. Use a relative path to pick a path relative to your Drupal root directory. The web server must be able to write to this path.'),
     );
     $form['settings'] = array(
-      '#type' => 'fieldset',
+      '#type' => 'details',
       '#title' => t('Advanced Settings'),
       '#tree' => TRUE,
-      '#collapsible' => TRUE,
       '#collapsed' => TRUE,
     );
     if (function_exists('chmod')) {

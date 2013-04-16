@@ -380,10 +380,9 @@ function backup_migrate_ui_destination_restore_file_confirm($form, &$form_state,
 
   // Add the advanced fieldset if there are any fields in it.
   if (@$form['advanced']) {
-    $form['advanced']['#type'] = 'fieldset';
+    $form['advanced']['#type'] = 'details';
     $form['advanced']['#title'] = t('Advanced Options');
     $form['advanced']['#collapsed'] = true;
-    $form['advanced']['#collapsible'] = true;
   }
 
   return $form;
@@ -446,9 +445,8 @@ function _backup_migrate_get_source_form($source_id = 'db') {
   $sources = _backup_migrate_get_source_pulldown($source_id);
   if (count($sources['#options']) > 1) {
     $form['source'] = array(
-      "#type" => "fieldset",
+      "#type" => "details",
       "#title" => t("Backup Source"),
-      "#collapsible" => TRUE,
       "#collapsed" => FALSE,
       "#tree" => FALSE,
     );

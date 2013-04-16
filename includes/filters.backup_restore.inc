@@ -82,9 +82,8 @@ class backup_migrate_filter_backup_restore extends backup_migrate_filter {
       $destination_settings = (array)(@$settings['destinations'][$destination->get_id()]) + $settings;
       if ($form = $destination->backup_settings_form($destination_settings)) {
         $out['destinations'][$destination->get_id()] = array(
-          '#type' => 'fieldset',
+          '#type' => 'details',
           '#title' => t('!name Backup Options', array('!name' => $destination->get('name'))),
-          "#collapsible" => TRUE,
           "#collapsed" => TRUE,
           '#tree' => TRUE,
           '#parents' => array('filters', 'destinations', $destination->get_id()),

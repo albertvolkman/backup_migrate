@@ -291,8 +291,6 @@ function backup_migrate_ui_manual_backup_load_profile_form($form, &$form_state, 
     $profile_options = array(0 => t('-- Select a Settings Profile --')) + $profile_options;
     $form['profile'] = array(
       "#title" => t("Settings Profile"),
-      "#collapsible" => TRUE,
-      "#collapsed" => FALSE,
       "#prefix" => '<div class="container-inline">',
       "#suffix" => '</div>',
       "#tree" => FALSE,
@@ -335,9 +333,8 @@ function backup_migrate_ui_manual_quick_backup_form($form, &$form_state) {
   $form = array();
 
   $form['quickbackup'] = array(
-    '#type' => 'fieldset',
+    '#type' => 'details',
     "#title" => t("Quick Backup"),
-    "#collapsible" => FALSE,
     "#collapsed" => FALSE,
     "#tree" => FALSE,
   );
@@ -457,9 +454,8 @@ function backup_migrate_ui_manual_backup_form($form, &$form_state, $profile) {
     '#default_value' => $profile->storage,
   );
   $form['destination'] = array(
-    "#type" => "fieldset",
+    '#type' => 'details',
     "#title" => t("Backup Destination"),
-    "#collapsible" => TRUE,
     "#collapsed" => FALSE,
     "#tree" => FALSE,
     "#description" => t("Choose where the backup file will be saved. Backup files contain sensitive data, so be careful where you save them. Select 'Download' to download the file to your desktop."),
@@ -610,10 +606,9 @@ function backup_migrate_ui_manual_restore_form() {
   $form = array_merge_recursive($form, backup_migrate_filters_settings_form(backup_migrate_filters_settings_default('restore'), 'restore'));
   // Add the advanced fieldset if there are any fields in it.
   if (@$form['advanced']) {
-    $form['advanced']['#type'] = 'fieldset';
+    $form['advanced']['#type'] = 'details';
     $form['advanced']['#title'] = t('Advanced Options');
     $form['advanced']['#collapsed'] = true;
-    $form['advanced']['#collapsible'] = true;
   }
 
   $form['submit'] = array(

@@ -80,9 +80,8 @@ function _backup_migrate_ui_backup_settings_form($profile) {
   $form    = array();
 
   $form['file'] = array(
-    "#type" => "fieldset",
+    "#type" => "details",
     "#title" => t("Backup File"),
-    "#collapsible" => TRUE,
     "#collapsed" => FALSE,
     "#tree" => FALSE,
   );
@@ -95,8 +94,7 @@ function _backup_migrate_ui_backup_settings_form($profile) {
 
   $form['file']['token_help'] = array(
     '#title' => t('Replacement patterns'),
-    '#type' => 'fieldset',
-    '#collapsible' => TRUE,
+    '#type' => 'details',
     '#collapsed' => TRUE,
   );
   $form['file']['token_help']['help'] = array(
@@ -122,10 +120,9 @@ function _backup_migrate_ui_backup_settings_form($profile) {
 
   // Add the advanced fieldset if there are any fields in it.
   if ($form['advanced']) {
-    $form['advanced']['#type'] = 'fieldset';
+    $form['advanced']['#type'] = 'details';
     $form['advanced']['#title'] = t('Advanced Options');
     $form['advanced']['#collapsed'] = true;
-    $form['advanced']['#collapsible'] = true;
   }
 
   $form['#validate'][]  = '_backup_migrate_ui_backup_settings_form_validate';
