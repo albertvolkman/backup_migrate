@@ -665,7 +665,7 @@ class backup_migrate_destination extends backup_migrate_item {
     foreach ($files as $key => $file) {
       if (isset($files[$key . '.info'])) {
         // See if there is an info file with the same name as the backup.
-        $info = drupal_parse_info_file($files[$key . '.info']->filepath());
+        $info = backup_migrate_parse_info_file($files[$key . '.info']->filepath());
         // Allow the stored metadata to override the detected metadata.
         $file->file_info = $info + $file->file_info;
         // Remove the metadata file from the list
