@@ -79,7 +79,8 @@ function _backup_migrate_filename_append_prepare($filename, $append_str) {
  * Construct a filename using token and some cleaning.
  */
 function _backup_migrate_construct_filename($filename, $timestamp='') {
-  $filename = token_replace($filename);
+  $token = \Drupal::token();
+  $filename = $token->replace($filename);
   $filename = preg_replace("/[^a-zA-Z0-9\.\-_]/", "", $filename);
   $filename = _backup_migrate_filename_append_prepare($filename, $timestamp);
   $filename .= '-' . $timestamp;
@@ -325,7 +326,9 @@ class backup_file {
         // not followed by a space or a tab.
         // See http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.2
         $header['value'] = preg_replace('/\r?\n(?!\t| )/', '', $header['value']);
-        drupal_add_http_header($header['key'], $header['value']);
+        $response = new \Symfony\Component\HttpFoundation\Response();
+        $response->headers->set($header['key'], $header['value']);
+        $response->send();
       }
       // Transfer file in 1024 byte chunks to save memory usage.
       while ($data = $this->read(1024)) {
@@ -343,7 +346,7 @@ class backup_file {
     // Start buffering and throw away the results so that errors don't get appended to the file.
     ob_start('_backup_migrate_file_dispose_buffer');
     backup_migrate_cleanup();
-    module_invoke_all('exit');
+    Drupal::moduleHandler()->invokeAll('exit');
     exit();
   }
 

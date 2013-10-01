@@ -103,7 +103,7 @@ class backup_migrate_destination_db extends backup_migrate_destination_remote {
         'devel_queries',
         'devel_times',
       );
-    $nodata_tables = array_merge($core, module_invoke_all('devel_caches'));
+    $nodata_tables = array_merge($core, \Drupal::moduleHandler()->invokeAll('devel_caches'));
      return array(
       'nodata_tables' => $nodata_tables,
       'exclude_tables' => array(),

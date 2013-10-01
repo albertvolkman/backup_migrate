@@ -366,7 +366,7 @@ class backup_migrate_destination_db_mysql extends backup_migrate_destination_db 
     if (!$this->connection) {
       $this->connection = parent::_get_db_connection();
       // Set the sql mode because the default is ANSI,TRADITIONAL which is not aware of collation or storage engine.
-      $this->connection->exec("SET sql_mode=''");
+      $this->query("SET sql_mode=''");
     }
     return $this->connection;
   }

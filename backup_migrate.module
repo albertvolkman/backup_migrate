@@ -8,7 +8,7 @@
  * database with an option to exclude table data (e.g. cache_*)
  */
 
-define('BACKUP_MIGRATE_VERSION', '7.x-2.x');
+define('BACKUP_MIGRATE_VERSION', '8.x-2.x');
 define('BACKUP_MIGRATE_MENU_PATH', 'admin/config/system/backup_migrate');
 define('BACKUP_MIGRATE_MENU_DEPTH', 4);
 
