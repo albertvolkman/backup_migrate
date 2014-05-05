@@ -101,7 +101,7 @@ class BackupMigrateManualBackupForm extends FormBase {
       );
     }
 
-    $form[] = array(
+    $form['save_options'][] = array(
       '#type' => 'submit',
       '#value' => t('Backup now'),
       '#weight' => 100,

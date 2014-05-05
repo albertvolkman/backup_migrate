@@ -7,6 +7,7 @@
  */
 
 use Drupal\Component\Utility\Timer;
+use Drupal\backup_migrate\BackupFile;
 
 define('BACKUP_MIGRATE_VERSION', '8.x-2.x');
 define('BACKUP_MIGRATE_MENU_PATH', 'admin/config/system/backup_migrate');

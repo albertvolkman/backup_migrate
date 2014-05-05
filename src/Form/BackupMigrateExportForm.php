@@ -103,7 +103,7 @@ class BackupMigrateExportForm extends FormBase {
       // Do the backup.
       backup_migrate_ui_manual_backup_perform($settings);
     }
-    $form_state['redirect'] = backup_migrate_menu_path;
+    $form_state['redirect'] = BACKUP_MIGRATE_MENU_PATH;
   }
 
 }

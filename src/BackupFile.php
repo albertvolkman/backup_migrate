@@ -2,6 +2,8 @@
 
 namespace Drupal\backup_migrate;
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * A backup file which allows for saving to and reading from the server.
  */
@@ -220,7 +222,7 @@ class BackupFile {
         // not followed by a space or a tab.
         // See http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.2
         $header['value'] = preg_replace('/\r?\n(?!\t| )/', '', $header['value']);
-        $response = new \Symfony\Component\HttpFoundation\Response();
+        $response = new Response();
         $response->headers->set($header['key'], $header['value']);
         $response->send();
       }
@@ -240,7 +242,7 @@ class BackupFile {
     // Start buffering and throw away the results so that errors don't get appended to the file.
     ob_start('_backup_migrate_file_dispose_buffer');
     backup_migrate_cleanup();
-    Drupal::moduleHandler()->invokeAll('exit');
+    \Drupal::moduleHandler()->invokeAll('exit');
     exit();
   }
 
