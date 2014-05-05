@@ -95,17 +95,6 @@ function backup_migrate_help($section, $arg) {
 }
 
 /**
- * Implementation of hook_menu().
- */
-function backup_migrate_menu() {
-  return array(BACKUP_MIGRATE_MENU_PATH => array(
-    'title' => 'Backup and Migrate',
-    'description' => 'Backup/restore your database or migrate data to or from another Drupal site.',
-    'route_name' => 'backup_migrate.export',
-  ));
-}
-
-/**
  * Implementation of hook_cron().
  *
  * Takes care of scheduled backups and deletes abandoned temp files.
