@@ -1,0 +1,41 @@
+backup_migrate.export:
+  route_name: backup_migrate.export
+  title: 'Backup'
+  base_route: backup_migrate.export
+  weight: 0
+
+backup_migrate.advanced:
+  route_name: backup_migrate.advanced
+  title: 'Advanced Backup'
+  base_route: backup_migrate.export
+  weight: 1
+
+backup_migrate.restore:
+  route_name: backup_migrate.restore
+  title: 'Restore'
+  base_route: backup_migrate.export
+  weight: 2
+
+#backup_migrate.destination:
+#  route_name: backup_migrate.destination
+#  title: 'Destinations'
+#  base_route: backup_migrate.export
+#  weight: 2
+
+backup_migrate.destination_files:
+  route_name: backup_migrate.destination_files
+  title: 'Destination Files'
+  base_route: backup_migrate.export
+  weight: 3
+
+#backup_migrate.profile:
+#  route_name: backup_migrate.profile
+#  title: 'Profiles'
+#  base_route: backup_migrate.export
+#  weight: 3
+
+backup_migrate_schedule_tab:
+  route_name: backup_migrate.schedule
+  title: 'Schedules'
+  tab_root_id: backup_migrate_tab
+  weight: 4

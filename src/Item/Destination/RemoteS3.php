@@ -1,17 +1,21 @@
 <?php
 
-
 /**
  * @file
  * Functions to handle the s3 backup destination.
  */
+
+namespace Drupal\backup_migrate\Item\Destination;
+
+use Drupal\backup_migrate\BackupFile;
+use Drupal\backup_migrate\Item\Destination\DestinationBase;
 
 /**
  * A destination for sending database backups to an s3 server.
  *
  * @ingroup backup_migrate_destinations
  */
-class backup_migrate_destination_s3 extends backup_migrate_destination_remote {
+class RemoteS3 extends RemoteBase {
   var $supported_ops = array('scheduled backup', 'manual backup', 'restore', 'list files', 'configure', 'delete');
   var $s3 = NULL;
   var $cache_files = TRUE;
@@ -35,7 +39,7 @@ class backup_migrate_destination_s3 extends backup_migrate_destination_remote {
    */
   function load_file($file_id) {
     backup_migrate_include('files');
-    $file = new backup_file(array('filename' => $file_id));
+    $file = new BackupFile(array('filename' => $file_id));
     if ($s3 = $this->s3_object()) {
       $data = $s3->getObject($this->get_bucket(), $this->remote_path($file_id), $file->filepath());
       if (!$data->error) {
@@ -68,7 +72,7 @@ class backup_migrate_destination_s3 extends backup_migrate_destination_remote {
           'filesize' => $file['size'],
           'filetime' => $file['time'],
         );
-        $files[$info['filename']] = new backup_file($info);
+        $files[$info['filename']] = new BackupFile($info);
       }
     }
     return $files;

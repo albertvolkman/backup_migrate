@@ -1,18 +1,16 @@
 <?php
 
+namespace Drupal\backup_migrate\Item\Destination;
 
-/**
- * @file
- * A destination type for saving locally to the server.
- */
+use Drupal\backup_migrate\BackupFile;
+use Drupal\backup_migrate\Item\Destination\DestinationBase;
 
 /**
  * A destination type for saving locally to the server.
  *
  * @ingroup backup_migrate_destinations
  */
-
-class backup_migrate_destination_files extends backup_migrate_destination {
+class FilesBase extends DestinationBase {
   var $supported_ops = array('scheduled backup', 'manual backup', 'restore', 'list files', 'configure', 'delete');
 
   function type_name() {
@@ -69,7 +67,7 @@ class backup_migrate_destination_files extends backup_migrate_destination {
     $filepath = $this->get_filepath($file_id);
     if (file_exists($filepath)) {
       backup_migrate_include('files');
-      return new backup_file(array('filepath' => $filepath));
+      return new BackupFile(array('filepath' => $filepath));
     }
   }
 
@@ -83,7 +81,7 @@ class backup_migrate_destination_files extends backup_migrate_destination {
         backup_migrate_include('files');
         while (FALSE !== ($file = readdir($handle))) {
           $filepath = $dir ."/". $file;
-          $files[$file] = new backup_file(array('filepath' => $filepath));
+          $files[$file] = new BackupFile(array('filepath' => $filepath));
         }
       }
     }
@@ -252,27 +250,5 @@ class backup_migrate_destination_files extends backup_migrate_destination {
       return FALSE;
     }
     return FALSE;
-  }
-}
-
-/**
- * The manual files directory.
- */
-class backup_migrate_destination_files_manual extends backup_migrate_destination_files {
-  var $supported_ops = array('manual backup', 'restore', 'list files', 'configure', 'delete');
-  function __construct($params = array()) {
-    $dir = 'private://backup_migrate/manual';
-    parent::__construct($params + array('location' => $dir, 'name' => t('Manual Backups Directory')));
-  }
-}
-
-/**
- * The scheduled files directory.
- */
-class backup_migrate_destination_files_scheduled extends backup_migrate_destination_files {
-  var $supported_ops = array('scheduled backup', 'restore', 'list files', 'configure', 'delete');
-  function __construct($params = array()) {
-    $dir = 'private://backup_migrate/scheduled';
-    parent::__construct($params + array('location' => $dir, 'name' => t('Scheduled Backups Directory')));
   }
 }

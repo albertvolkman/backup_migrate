@@ -1,17 +1,20 @@
 <?php
 
-
 /**
  * @file
  * A filter to run some basic utility functions. Basically any useful option not big enough to justify it's own class.
  */
+
+namespace Drupal\backup_migrate\Filter;
+
+use Drupal\backup_migrate\Filter\FilterBase;
 
 /**
  * A filter to send a notification email on success or failure of backup.
  *
  * @ingroup backup_migrate_filters
  */
-class backup_migrate_filter_utils extends backup_migrate_filter {
+class Utils extends FilterBase {
   var $saved_devel_query = NULL;
 
   /**
@@ -40,7 +43,7 @@ class backup_migrate_filter_utils extends backup_migrate_filter {
    */
   function backup_settings_form($settings) {
     $form = array();
-    if (module_exists('devel') && variable_get('dev_query', 0)) {
+    if (module_exists('devel') && \Drupal::config('devel.settings')->get('query_display')) {
       $form['database']['utils_disable_query_log'] = array(
         '#type' => 'checkbox',
         '#title' => t('Disable query log'),
@@ -57,7 +60,7 @@ class backup_migrate_filter_utils extends backup_migrate_filter {
     $form['advanced']['utils_site_offline_message'] = array(
       '#type' => 'textarea',
       '#title' => t('Site off-line message'),
-      '#default_value' => !empty($settings['utils_site_offline_message']) ? $settings['utils_site_offline_message'] : variable_get('maintenance_mode_message', t('@site is currently under maintenance. We should be back shortly. Thank you for your patience.', array('@site' => variable_get('site_name', 'Drupal')))),
+      '#default_value' => !empty($settings['utils_site_offline_message']) ? $settings['utils_site_offline_message'] : \Drupal::config('system.maintenance')->get('message'), array('@site' => \Drupal::config('system.site')->get('name')),
       '#description' => t('Message to show visitors when the site is in off-line mode.')
     );
     $form['advanced']['utils_description'] = array(
@@ -75,7 +78,7 @@ class backup_migrate_filter_utils extends backup_migrate_filter {
    */
   function restore_settings_form($settings) {
     $form = array();
-    if (module_exists('devel') && variable_get('dev_query', 0)) {
+    if (module_exists('devel') && \Drupal::config('devel.settings')->get('query_display')) {
       $form['advanced']['utils_disable_query_log'] = array(
         '#type' => 'checkbox',
         '#title' => t('Disable query log'),
@@ -92,7 +95,7 @@ class backup_migrate_filter_utils extends backup_migrate_filter {
     $form['advanced']['utils_site_offline_message'] = array(
       '#type' => 'textarea',
       '#title' => t('Site off-line message'),
-      '#default_value' => !empty($settings['utils_site_offline_message']) ? $settings['utils_site_offline_message'] : variable_get('maintenance_mode_message', t('@site is currently under maintenance. We should be back shortly. Thank you for your patience.', array('@site' => variable_get('site_name', 'Drupal')))),
+      '#default_value' => !empty($settings['utils_site_offline_message']) ? $settings['utils_site_offline_message'] : \Drupal::config('system.maintenance')->get('message'), array('@site' => \Drupal::config('system.site')->get('name')),
       '#description' => t('Message to show visitors when the site is in off-line mode.')
     );
     return $form;
@@ -123,9 +126,10 @@ class backup_migrate_filter_utils extends backup_migrate_filter {
    * Disable devel query logging if it's active and the user has chosen to do so.
    */
   function disable_devel_query($settings) {
-    $this->saved_devel_query = variable_get('dev_query', 0);
-    if (module_exists('devel') && variable_get('dev_query', 0) && !empty($settings->filters['utils_disable_query_log'])) {
-      variable_set('dev_query', 0);
+    $query_dispay = \Drupal::config('devel.settings')->get('query_display');
+    $this->saved_devel_query = $query_display;
+    if (module_exists('devel') && $query_display && !empty($settings->filters['utils_disable_query_log'])) {
+      \Drupal::config('devel.settings')->set('query_display', 0);
     }
   }
 
@@ -134,7 +138,7 @@ class backup_migrate_filter_utils extends backup_migrate_filter {
    */
   function enable_devel_query($settings) {
     if (module_exists('devel')) {
-      variable_set('dev_query', $this->saved_devel_query);
+      \Drupal::config('devel.settings')->set('query_display', $this->saved_devel_query);
     }
   }
 
@@ -149,7 +153,7 @@ class backup_migrate_filter_utils extends backup_migrate_filter {
     $file->file_info['sites'] = array(
         '0' => array(
           'version' => VERSION,
-          'name' => variable_get('site_name', ''),
+          'name' => \Drupal::config('system.site')->get('name'),
           'url' => url('', array('absolute' => TRUE)),
         ),
       );
@@ -161,14 +165,14 @@ class backup_migrate_filter_utils extends backup_migrate_filter {
    */
   function take_site_offline($settings) {
     // Save the current state of the site in case a restore overwrites it.
-    $this->saved_site_offline = variable_get('maintenance_mode', 0);
+    $this->saved_site_offline = \Drupal::state()->get('system.maintenance_mode');
     if (@$settings->filters['utils_site_offline']) {
-      $this->saved_site_offline_message = variable_get('maintenance_mode_message', NULL);
+      $config = \Drupal::config('system.maintenance');
+      $this->saved_site_offline_message = $config->get('message');
       if (!empty($settings->filters['utils_site_offline_message'])) {
-        $this->saved_site_offline_message = variable_get('maintenance_mode_message', NULL);
-        variable_set('maintenance_mode_message', $settings->filters['utils_site_offline_message']);
+        $config->set('message', $settings->filters['utils_site_offline_message']);
       }
-      variable_set('maintenance_mode', 1);
+      \Drupal::state()->set('system.maintenance_mode', 1);
       _backup_migrate_message('Site was taken offline.');
     }
   }
@@ -178,10 +182,10 @@ class backup_migrate_filter_utils extends backup_migrate_filter {
    */
   function take_site_online($settings) {
     // Take the site back off/online because the restored db may have changed that setting.
-    variable_set('maintenance_mode', $this->saved_site_offline);
+    \Drupal::state()->set('system.maintenance_mode', $this->saved_site_offline);
     if ($settings->filters['utils_site_offline']) {
       if (!empty($this->saved_site_offline_message)) {
-        variable_set('maintenance_mode_message', $this->saved_site_offline_message);
+        \Drupal::config('system.maintenance')->set('message', $this->saved_site_offline_message);
       }
       _backup_migrate_message('Site was taken online.');
     }

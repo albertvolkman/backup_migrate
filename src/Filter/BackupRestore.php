@@ -1,5 +1,8 @@
 <?php
 
+namespace Drupal\backup_migrate\Filter;
+
+use Drupal\backup_migrate\Filter\FilterBase;
 
 /**
  * @file
@@ -11,7 +14,7 @@
  *
  * @ingroup backup_migrate_filters
  */
-class backup_migrate_filter_backup_restore extends backup_migrate_filter {
+class BackupRestore extends FilterBase {
   var $op_weights = array('backup' => 0, 'restore' => 0);
 
   /**
@@ -157,9 +160,6 @@ class backup_migrate_filter_backup_restore extends backup_migrate_filter {
       // If no (valid) node type has been provided, display a node type overview.
       foreach ($types as $key => $type) {
         // Include the necessary file if specified by the type.
-        if (!empty($type['file'])) {
-          require_once './'. $type['file'];
-        }
         $destinations[] = new $type['class'](array());
       }
     }

@@ -1,0 +1,17 @@
+backup_migrate.add_destination:
+  route_name: backup_migrate.destination_add
+  title: 'Add destination'
+  appears_on:
+    - 'backup_migrate.destination'
+
+backup_migrate.add_profile:
+  route_name: backup_migrate.profile_add
+  title: 'Add profile'
+  appears_on:
+    - 'backup_migrate.profile'
+
+backup_migrate.add_schedule:
+  route_name: backup_migrate.schedule_add
+  title: 'Add schedule'
+  appears_on:
+    - 'backup_migrate.schedule'

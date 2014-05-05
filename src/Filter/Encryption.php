@@ -1,17 +1,21 @@
 <?php
 
-
 /**
  * @file
  * A filter for encrypting bckups with AES.
  */
+
+namespace Drupal\backup_migrate\Filter;
+
+use Drupal\backup_migrate\BackupFile;
+use Drupal\backup_migrate\Filter\FilterBase;
 
 /**
  * A filter for encrypting backup files.
  *
  * @ingroup backup_migrate_filters
  */
-class backup_migrate_filter_encryption extends backup_migrate_filter {
+class Encryption extends FilterBase {
   var $op_weights = array('backup' => 170, 'restore' => -170);
 
   /**
@@ -132,7 +136,7 @@ class backup_migrate_filter_encryption extends backup_migrate_filter {
       switch ($settings->filters['encryption']) {
         case "aes":
           $from = $file->push_type('aes');
-          $from = new backup_file(array('filepath' => $from));
+          $from = new BackupFile(array('filepath' => $from));
           if (!$success = $this->aes_encrypt($from, $file)) {
             $file = NULL;
           }

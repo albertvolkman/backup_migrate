@@ -1,20 +1,21 @@
 <?php
 
-
 /**
  * @file
  * Functions to handle the direct to database destination.
  */
 
+namespace Drupal\backup_migrate\Item\Destination;
 
 use Drupal\Core\Database\Database;
+use Drupal\backup_migrate\Item\Destination\RemoteBase;
 
 /**
  * A destination type for saving to a database server.
  *
  * @ingroup backup_migrate_destinations
  */
-class backup_migrate_destination_db extends backup_migrate_destination_remote {
+class RemoteDB extends RemoteBase {
   var $supported_ops = array('scheduled backup', 'manual backup', 'configure', 'source');
   var $db_target = 'default';
   var $connection = null;

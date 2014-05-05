@@ -1,0 +1,27 @@
+allow_backup_to_download: 1
+allow_backup_to_file: 1
+cleanup_time: 21600
+data:
+  rows_per_line: 30
+  bytes_per_line: 2000
+destinations: []
+destination_id: "download"
+file_name: "[site:name]"
+filters:
+  compression: "none"
+  exclude_tables: []
+  nodata_tables: []
+max_email_size: 20971520
+max_time:
+  backup: 1200
+  restore: 1200
+  timeout_buffer: 5
+profile_id: "default"
+schedule:
+  backup_period: 0
+  backup_keep: 0
+  buffer: 0.01
+source_id:
+timestamp:
+  append: 0
+  format: "Y-m-d\TH-i-s"

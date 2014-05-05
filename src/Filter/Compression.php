@@ -1,5 +1,8 @@
 <?php
 
+namespace Drupal\backup_migrate\Filter;
+
+use Drupal\backup_migrate\Filter\FilterBase;
 
 /**
  * @file
@@ -11,7 +14,7 @@
  *
  * @ingroup backup_migrate_filters
  */
-class backup_migrate_filter_compression extends backup_migrate_filter {
+class Compression extends FilterBase {
   var $op_weights = array('backup' => 100, 'restore' => -100);
 
   /**

@@ -1,6 +1,8 @@
 <?php
 
-backup_migrate_include('destinations.db');
+namespace Drupal\backup_migrate\Item\Destination;
+
+use Drupal\backup_migrate\Item\Destination\RemoteDB;
 
 /**
  * @file
@@ -13,7 +15,7 @@ backup_migrate_include('destinations.db');
  * @ingroup backup_migrate_destinations
  */
 
-class backup_migrate_destination_db_mysql extends backup_migrate_destination_db {
+class RemoteDBMysql extends RemoteDB {
   function type_name() {
     return t("MySQL Database");
   }
@@ -270,7 +272,7 @@ class backup_migrate_destination_db_mysql extends backup_migrate_destination_db 
   function _get_tables() {
     $out = array();
     // get auto_increment values and names of all tables
-    $tables = $this->query("show table status", array(), array('fetch' => PDO::FETCH_ASSOC));
+    $tables = $this->query("show table status", array(), array('fetch' => \PDO::FETCH_ASSOC));
     foreach ($tables as $table) {
       // Lowercase the keys because between Drupal 7.12 and 7.13/14 the default query behavior was changed.
       // See: http://drupal.org/node/1171866
@@ -285,7 +287,7 @@ class backup_migrate_destination_db_mysql extends backup_migrate_destination_db 
    */
   function _get_table_structure_sql($table) {
     $out = "";
-    $result = $this->query("SHOW CREATE TABLE `". $table['name'] ."`", array(), array('fetch' => PDO::FETCH_ASSOC));
+    $result = $this->query("SHOW CREATE TABLE `". $table['name'] ."`", array(), array('fetch' => \PDO::FETCH_ASSOC));
     foreach ($result as $create) {
       // Lowercase the keys because between Drupal 7.12 and 7.13/14 the default query behavior was changed.
       // See: http://drupal.org/node/1171866
@@ -305,11 +307,12 @@ class backup_migrate_destination_db_mysql extends backup_migrate_destination_db 
    *  Get the sql to insert the data for a given table
    */
   function _dump_table_data_sql_to_file($file, $table) {
-    $rows_per_line = variable_get('backup_migrate_data_rows_per_line', 30);
-    $bytes_per_line = variable_get('backup_migrate_data_bytes_per_line', 2000);
+    $config = \Drupal::config('backup_migrate.settings');
+    $rows_per_line = $config->get('data.rows_per_line', 30);
+    $bytes_per_line = $config->get('data.bytes_per_line', 30);
   
     $lines = 0;
-    $data = $this->query("SELECT * FROM `". $table['name'] ."`", array(), array('fetch' => PDO::FETCH_ASSOC));
+    $data = $this->query("SELECT * FROM `". $table['name'] ."`", array(), array('fetch' => \PDO::FETCH_ASSOC));
     $rows = $bytes = 0;
 
     // Escape backslashes, PHP code, special chars

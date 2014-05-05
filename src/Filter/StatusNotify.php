@@ -1,5 +1,8 @@
 <?php
 
+namespace Drupal\backup_migrate\Filter;
+
+use Drupal\backup_migrate\Filter\FilterBase;
 
 /**
  * @file
@@ -11,17 +14,18 @@
  *
  * @ingroup backup_migrate_filters
  */
-class backup_migrate_filter_statusnotify extends backup_migrate_filter {
+class StatusNotify extends FilterBase {
   
   /**
    * Get the default backup settings for this filter.
    */
   function backup_settings_default() {
+    $email = \Drupal::config('system.site')->get('mail');
     return array(
       'notify_success_enable' => FALSE,
       'notify_failure_enable' => FALSE,
-      'notify_success_email' => variable_get('site_mail', ''),
-      'notify_failure_email' => variable_get('site_mail', ''),
+      'notify_success_email' => $email,
+      'notify_failure_email' => $email,
     );
   }
 
@@ -59,7 +63,7 @@ class backup_migrate_filter_statusnotify extends backup_migrate_filter {
   function backup_succeed($settings) {
     if (@$settings->filters['notify_success_enable'] && $to = @$settings->filters['notify_success_email']) {
       $messages = $this->get_messages();
-      $subject = t('!site backup succeeded', array('!site' => variable_get('site_name', 'Drupal site')));
+      $subject = t('!site backup succeeded', array('!site' => \Drupal::config('system.site')->get('name')));
       if ($messages = $this->get_messages()) {
         $body = t("The site backup has completed successfully with the following messages:\n!messages", array('!messages' => $messages));
       }
@@ -76,7 +80,7 @@ class backup_migrate_filter_statusnotify extends backup_migrate_filter {
   function backup_fail($settings) {
     if (@$settings->filters['notify_failure_enable'] && $to = @$settings->filters['notify_failure_email']) {
       $messages = $this->get_messages();
-      $subject = t('!site backup failed', array('!site' => variable_get('site_name', 'Drupal site')));
+      $subject = t('!site backup failed', array('!site' => \Drupal::config('system.site')->get('name')));
       if ($messages = $this->get_messages()) {
         $body = t("The site backup has failed with the following messages:\n!messages", array('!messages' => $messages));
       }
