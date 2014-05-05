@@ -34,8 +34,7 @@ class BackupMigrateExportForm extends FormBase {
     $form['quickbackup'] = array(
       '#type' => 'details',
       "#title" => t("Quick Backup"),
-      "#collapsed" => FALSE,
-      "#tree" => FALSE,
+      "#collapsible" => FALSE,
     );
 
     $form['quickbackup']['source_id'] = _backup_migrate_get_source_pulldown($config->get('source_id'));
@@ -77,7 +76,7 @@ class BackupMigrateExportForm extends FormBase {
    */
   public function validateForm(array &$form, array &$form_state) {
     if ($form_state['values']['source_id'] == $form_state['values']['destination_id']) {
-      form_set_error('destination_id', t('A source cannot be backed up to itself. Please pick a different destination for this backup.'));
+      $this->setFormError('destination_id', t('A source cannot be backed up to itself. Please pick a different destination for this backup.'));
     }
   }
 

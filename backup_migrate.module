@@ -228,9 +228,8 @@ function theme_backup_migrate_ui_manual_quick_backup_form($form) {
 /**
  * Perform an actual manual backup and tell the user of the progress.
  */
-
 function backup_migrate_ui_manual_backup_perform($settings) {
-  // Peform the actual backup.
+  // Perform the actual backup.
   backup_migrate_perform_backup($settings);
 }
 
@@ -392,7 +391,7 @@ function backup_migrate_backup_fail($message, $params, $settings) {
 }
 
 /**
- * Clean up when a backup operation suceeds.
+ * Clean up when a backup operation succeeds.
  */
 function backup_migrate_backup_succeed($message, $params, $settings) {
   backup_migrate_include('filters', 'files');
@@ -424,7 +423,6 @@ function backup_migrate_restore_succeed($message, $params, $settings) {
   return FALSE;
 }
 
-
 /**
  * Cleanup after a success or failure.
  */
@@ -434,7 +432,6 @@ function backup_migrate_cleanup() {
     _backup_migrate_temp_files_delete();
   }
 }
-
 
 /**
  * Shutdown callback. Called when the script terminates even if the script timed out.
@@ -449,64 +446,6 @@ function backup_migrate_shutdown($settings) {
     // Add a redirect or we'll just get whitescreened.
     drupal_goto(BACKUP_MIGRATE_MENU_PATH);
   }
-}
-
-
-
-/* Actions/Workflow integration */
-
-/**
- * Action to backup the drupal site. Requires actions.module.
-function action_backup_migrate_backup($op, $edit = array()) {
-  switch ($op) {
-    case 'do':
-      _backup_migrate_backup_with_defaults();
-      watchdog('action', 'Backed up database');
-      break;
-
-    case 'metadata':
-      return array(
-      'description' => t('Backup the database with the default settings'),
-      'type' => t('Backup and Migrate'),
-      'batchable' => TRUE,
-      'configurable' => FALSE,
-    );
-
-    // Return an HTML config form for the action.
-
-    case 'form':
-      return '';
-
-    // Validate the HTML form.
-
-    case 'validate':
-      return TRUE;
-
-    // Process the HTML form to store configuration.
-
-    case 'submit':
-      return '';
-  }
-}
- */
-
-/*
- * Implementation of hook_action_info().
-function backup_migrate_action_info() {
-  return array(
-    'backup_migrate_action_backup' => array(
-      'label' => t('Backup the database'),
-      'description' => t('Backup the database with the default settings.'),
-    ),
-  );
-}
- */
-
-/*
- * Action callback.
- */
-function backup_migrate_action_backup() {
-  _backup_migrate_backup_with_defaults();
 }
 
 /* Utilities */
