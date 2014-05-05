@@ -6,6 +6,8 @@
  * Drush commands for backup and migrate.
  */
 
+use Drupal\Component\Utility\String;
+
 /**
  * Implementation of hook_drush_command().
  */
@@ -217,9 +219,9 @@ function backup_migrate_drush_destination_files($destination_id = NULL) {
     if ($file->is_recognized_type()) {
       $info = $file->info();
       $out[] = array(
-        check_plain($info['filename']),
+        String::checkPlain($info['filename']),
         format_date($info['filetime'], 'small'),
-        format_interval(time() - $info['filetime'], 1),
+        \Drupal::service('date')->formatInterval(time() - $info['filetime'], 1),
         format_size($info['filesize']),
       );
     }

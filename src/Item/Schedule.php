@@ -3,6 +3,7 @@
 namespace Drupal\backup_migrate\Item;
 
 use Drupal\backup_migrate\Item\ItemBase;
+use Drupal\Component\Utility\String;
 
 /**
  * A schedule class for crud operations.
@@ -92,7 +93,7 @@ class Schedule extends ItemBase {
    */
   function get_destination_name() {
     if ($destination = $this->get_destination()) {
-      return check_plain($destination->get_name());
+      return String::checkPlain($destination->get_name());
     }
     return '<div class="row-error">'. t("Missing") .'</div>';
   }
@@ -110,7 +111,7 @@ class Schedule extends ItemBase {
    */
   function get_profile_name() {
     if ($profile = $this->get_profile()) {
-      return check_plain($profile->get_name());
+      return String::checkPlain($profile->get_name());
     }
     return '<div class="row-error">'. t("Missing") .'</div>';
   }
@@ -120,7 +121,7 @@ class Schedule extends ItemBase {
    */
   function get_frequency_description() {
     $period = $this->get_frequency_period();
-    $out = format_plural(($this->period / $period['seconds']), $period['singular'], $period['plural']);
+    $out = \Drupal::translation()->formatPlural(($this->period / $period['seconds']), $period['singular'], $period['plural']);
     return $out;
   }
 

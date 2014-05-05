@@ -124,7 +124,7 @@ function _backup_migrate_default_structure_only_tables() {
     'devel_queries',
     'devel_times',
   );
-  $alltables = array_merge($core, module_invoke_all('devel_caches'));
+  $alltables = array_merge($core, \Drupal::moduleHandler()->invokeAll('devel_caches'));
   return $alltables;
 }
 

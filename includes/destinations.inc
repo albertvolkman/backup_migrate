@@ -5,6 +5,7 @@
  * All of the destination handling code needed for Backup and Migrate.
  */
 
+use Drupal\Component\Utility\String;
 use Drupal\backup_migrate\Item\Destination\DestinationBase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -293,16 +294,16 @@ function backup_migrate_ui_destination_display_files($destination_id = NULL) {
       $description = '';
       // Add the description as a new row.
       if (!empty($info['description'])) {
-        $description = ' <div title="'.check_plain($info['description']).'" class="backup-migrate-description">'. $info['description'] .'</div>';
+        $description = ' <div title="' . String::checkPlain($info['description']).'" class="backup-migrate-description">'. $info['description'] .'</div>';
       }
 
       // Show only files that can be restored from.
       if ($file->is_recognized_type()) {
         $sort[] = $info[$sort_key];
         $rows[] = array_merge(array(
-          check_plain($info['filename']) . $description,
+          String::checkPlain($info['filename']) . $description,
           format_date($info['filetime'], 'small'),
-          format_interval(time() - $info['filetime'], 1),
+          \Drupal::service('date')->formatInterval(time() - $info['filetime'], 1),
           format_size($info['filesize']),
         ), $operations);
       }
@@ -336,7 +337,7 @@ function backup_migrate_ui_destination_display_files($destination_id = NULL) {
     $out = drupal_render($out);
 
     if ($destination->cache_files && $destination->fetch_time) {
-      $out .= '<div class="backup-migrate-cache-time">'. t('This listing was fetched !time ago. !refresh', array('!time' => format_interval(time() - $destination->fetch_time, 1), '!refresh' => l(t('fetch now'), $_GET['q'], array('query' => array('refresh' => 'true'))))) .'</div>';
+      $out .= '<div class="backup-migrate-cache-time">'. t('This listing was fetched !time ago. !refresh', array('!time' => \Drupal::service('date')->formatInterval(time() - $destination->fetch_time, 1), '!refresh' => l(t('fetch now'), $_GET['q'], array('query' => array('refresh' => 'true'))))) .'</div>';
     }
     return $out;
   }

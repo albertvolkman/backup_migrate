@@ -131,7 +131,7 @@ function backup_migrate_filters_settings_form($settings, $op) {
  * Add a form parent to the filter settings so that the filter values are saved in the right table.
  */
 function backup_migrate_filters_settings_form_set_parents($form) {
-  foreach (element_children($form) as $key) {
+  foreach (\Drupal\Core\Render\Element::children($form) as $key) {
     if (!isset($form[$key]['#parents'])) {
       $form[$key]['#parents'] = array('filters', $key);
       $form[$key] = backup_migrate_filters_settings_form_set_parents($form[$key]);

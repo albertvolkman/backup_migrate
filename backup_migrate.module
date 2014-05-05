@@ -6,6 +6,8 @@
  * database with an option to exclude table data (e.g. cache_*)
  */
 
+use Drupal\Component\Utility\Timer;
+
 define('BACKUP_MIGRATE_VERSION', '8.x-2.x');
 define('BACKUP_MIGRATE_MENU_PATH', 'admin/config/system/backup_migrate');
 define('BACKUP_MIGRATE_MENU_DEPTH', 4);
@@ -250,7 +252,7 @@ function backup_migrate_ui_export_form($form, &$form_state, $item) {
  */
 function backup_migrate_perform_backup(&$settings) {
   backup_migrate_include('destinations', 'files', 'filters');
-  timer_start('backup_migrate_backup');
+  Timer::start('backup_migrate_backup');
 
   // If not in 'safe mode', increase the maximum execution time:
   if (!ini_get('safe_mode') && strpos(ini_get('disable_functions'), 'set_time_limit') === FALSE && ini_get('max_execution_time') < 1200) {
@@ -290,7 +292,7 @@ function backup_migrate_perform_backup(&$settings) {
   }
 
   // Backup succeeded,
-  $time = timer_stop('backup_migrate_backup');
+  $time = Timer::stop('backup_migrate_backup');
   $message = '%source backed up successfully to %file in destination %dest in !time ms. !action';
   $params = array(
     '%file' => $filename,
@@ -312,7 +314,7 @@ function backup_migrate_perform_backup(&$settings) {
  */
 function backup_migrate_perform_restore($destination_id, $file, $settings = array()) {
   backup_migrate_include('files', 'filters');
-  timer_start('backup_migrate_restore');
+  Timer::start('backup_migrate_restore');
   $config = \Drupal::config('backup_migrate.settings');
 
   // If not in 'safe mode', increase the maximum execution time:
@@ -355,7 +357,7 @@ function backup_migrate_perform_restore($destination_id, $file, $settings = arra
     return FALSE;
   }
 
-  $time = timer_stop('backup_migrate_restore');
+  $time = Timer::stop('backup_migrate_restore');
   if ($file) {
     $destination = backup_migrate_get_destination($destination_id);
     $message = '%source restored from %dest file %file in !time ms. !action';

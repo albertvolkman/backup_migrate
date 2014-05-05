@@ -120,7 +120,7 @@ class BackupMigrateManualBackupForm extends FormBase {
    */
   public function validateForm(array &$form, array &$form_state) {
     if ($form_state['values']['source_id'] == $form_state['values']['destination_id']) {
-      form_set_error('destination_id', t('A source cannot be backed up to itself. Please pick a different destination for this backup.'));
+      $this->setFormError('destination_id', t('A source cannot be backed up to itself. Please pick a different destination for this backup.'));
     }
   }
 

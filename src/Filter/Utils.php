@@ -128,7 +128,7 @@ class Utils extends FilterBase {
   function disable_devel_query($settings) {
     $query_dispay = \Drupal::config('devel.settings')->get('query_display');
     $this->saved_devel_query = $query_display;
-    if (module_exists('devel') && $query_display && !empty($settings->filters['utils_disable_query_log'])) {
+    if (\Drupal::moduleHandler()->moduleExists('devel') && $query_display && !empty($settings->filters['utils_disable_query_log'])) {
       \Drupal::config('devel.settings')->set('query_display', 0);
     }
   }
@@ -137,7 +137,7 @@ class Utils extends FilterBase {
    * Restore devel query to previous state.
    */
   function enable_devel_query($settings) {
-    if (module_exists('devel')) {
+    if (\Drupal::moduleHandler()->moduleExists('devel')) {
       \Drupal::config('devel.settings')->set('query_display', $this->saved_devel_query);
     }
   }

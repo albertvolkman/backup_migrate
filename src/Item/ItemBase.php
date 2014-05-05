@@ -2,6 +2,8 @@
 
 namespace Drupal\backup_migrate\Item;
 
+use Drupal\Component\Utility\String;
+
 /**
  * A base class for items which can be stored in the database, listed, edited, deleted etc.
  */
@@ -264,7 +266,7 @@ class ItemBase {
   function get_list_row() {
     $out = array();
     foreach ($this->get_list_column_info() as $key => $col) {
-      $out[$key] = empty($col['html']) ? check_plain($this->get($key)) : $this->get($key);
+      $out[$key] = empty($col['html']) ? String::checkPlain($this->get($key)) : $this->get($key);
     }
     return $out;
   }
@@ -347,7 +349,7 @@ class ItemBase {
     static $cache = array();
 
     // Allow other modules to declare destinations programatically.
-    $items = module_invoke_all($this->db_table);
+    $items = \Drupal::moduleHandler()->invokeAll($this->db_table);
 
     // Get any items stored as a variable. This allows destinations to be defined in settings.php
     foreach (\Drupal::config('backup_migrate.settings')->get('destinations') as $info) {
@@ -369,7 +371,7 @@ class ItemBase {
     // Allow other modules to alter the items. This should maybe be before the db override code above
     // but then the filters are not able to set defaults for missing values. Other modules should just
     // be careful not to overwrite the user's UI changes in an unexpected way.
-    drupal_alter($this->db_table, $items);
+    \Drupal::moduleHandler()->alter($this->db_table, $items);
 
     return $items;
   }
