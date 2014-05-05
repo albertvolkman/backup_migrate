@@ -31,7 +31,7 @@ class RemoteDB extends RemoteBase {
   function save_file($file, $settings) {
     backup_migrate_include('files');
 
-    // Set the source_id to the destination_id in the settings since for a restore, the source_id is the 
+    // Set the source_id to the destination_id in the settings since for a restore, the source_id is the
     // database that gets restored to.
     $settings->set_source($this->get_id());
 
@@ -205,7 +205,7 @@ class RemoteDB extends RemoteBase {
             'port'      => empty($this->dest_url['port'])     ? NULL : $this->dest_url['port'],
             'username'  => empty($this->dest_url['user'])     ? NULL : $this->dest_url['user'],
             'password'  => empty($this->dest_url['pass'])     ? NULL : $this->dest_url['pass'],
-            'database'  => empty($this->dest_url['path'])     ? NULL : $this->dest_url['path'], 
+            'database'  => empty($this->dest_url['path'])     ? NULL : $this->dest_url['path'],
           );
           $key    = uniqid('backup_migrate_tmp_');
           $target = 'default';

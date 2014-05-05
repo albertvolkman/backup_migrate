@@ -157,7 +157,7 @@ class Utils extends FilterBase {
           'url' => url('', array('absolute' => TRUE)),
         ),
       );
-    
+
   }
 
   /**

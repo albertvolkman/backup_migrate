@@ -33,7 +33,7 @@ class Profile extends ItemBase {
 
   /**
    * Get a table of all items of this type.
-   */  
+   */
   function get_list() {
     drupal_add_css(drupal_get_path('module', 'backup_migrate') .'/backup_migrate.css');
     return parent::get_list();
@@ -41,7 +41,7 @@ class Profile extends ItemBase {
 
   /**
    * Get the columns needed to list the type.
-   */  
+   */
   function get_list_column_info() {
     $out = parent::get_list_column_info();
     $out = array(
@@ -54,7 +54,7 @@ class Profile extends ItemBase {
 
   /**
    * Get a row of data to be used in a list of items of this type.
-   */  
+   */
   function get_list_row() {
     $row = parent::get_list_row();
     if (empty($this->enabled)) {

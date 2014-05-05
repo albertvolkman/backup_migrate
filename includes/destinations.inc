@@ -44,7 +44,7 @@ function backup_migrate_backup_migrate_destination_types() {
         'class' => 'Drupal\backup_migrate\Item\Destination\FilesScheduled',
       ),
     );
-  }  
+  }
   $out += array(
     'browser_download' => array(
       'file' => drupal_get_path('module', 'backup_migrate') .'/includes/destinations.browser.inc',

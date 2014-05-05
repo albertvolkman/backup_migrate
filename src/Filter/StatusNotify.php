@@ -15,7 +15,7 @@ use Drupal\backup_migrate\Filter\FilterBase;
  * @ingroup backup_migrate_filters
  */
 class StatusNotify extends FilterBase {
-  
+
   /**
    * Get the default backup settings for this filter.
    */

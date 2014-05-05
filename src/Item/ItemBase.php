@@ -29,7 +29,7 @@ class ItemBase {
 
   /**
    * Save the item to the database.
-   */  
+   */
   function save() {
     if (!$this->get_id()) {
       $this->generate_id();
@@ -40,7 +40,7 @@ class ItemBase {
 
   /**
    * Delete the item from the database.
-   */  
+   */
   function delete() {
     $keys = (array)$this->get_primary_key();
     db_query('DELETE FROM {' . $this->db_table . '} WHERE ' . $keys[0] . ' = :id', array(':id' => $this->get_id()));
@@ -181,7 +181,7 @@ class ItemBase {
 
   /**
    * Get the member with the given key.
-   */  
+   */
   function get($key) {
     if (method_exists($this, 'get_'. $key)) {
       return $this->{'get_'. $key}();
@@ -220,7 +220,7 @@ class ItemBase {
 
   /**
    * Get a table of all items of this type.
-   */  
+   */
   function get_list() {
     $items = $this->all_items();
     $rows = array();
@@ -240,7 +240,7 @@ class ItemBase {
 
   /**
    * Get the columns needed to list the type.
-   */  
+   */
   function get_list_column_info() {
     return array(
       'actions' => array('title' => t('Operations'), 'html' => TRUE),
@@ -249,7 +249,7 @@ class ItemBase {
 
   /**
    * Get header for a lost of this type.
-   */  
+   */
   function get_list_header() {
     $out = array();
     foreach ($this->get_list_column_info() as $key => $col) {
@@ -260,7 +260,7 @@ class ItemBase {
 
   /**
    * Get a row of data to be used in a list of items of this type.
-   */  
+   */
   function get_list_row() {
     $out = array();
     foreach ($this->get_list_column_info() as $key => $col) {
@@ -319,7 +319,7 @@ class ItemBase {
   }
 
   /* Static Functions */
- 
+
    /**
    * This function is not supposed to be called. It is just here to help the po extractor out.
    */

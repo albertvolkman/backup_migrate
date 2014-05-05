@@ -18,7 +18,7 @@ define('BACKUP_MIGRATE_MENU_DEPTH', 4);
 function backup_migrate_help($section, $arg) {
   $help = array(
     array(
-      'body' => 
+      'body' =>
        t('Backup and Migrate makes the task of backing up your Drupal database and migrating data from one Drupal install to another easier. It provides a function to backup the entire database to file or download, and to restore from a previous backup. You can also schedule the backup operation. Compression of backup files is also supported.  The database backup files created with this module can be imported into this or any other Drupal installation with the !restorelink, or you can use a database tool such as <a href="!phpmyadminurl">phpMyAdmin</a> or the mysql command line command.',
          array(
             '!restorelink' => \Drupal::currentUser()->hasPermission('restore from backup') ? l(t('restore feature'), BACKUP_MIGRATE_MENU_PATH . '/restore') : t('restore feature'),
@@ -28,13 +28,13 @@ function backup_migrate_help($section, $arg) {
     ),
     BACKUP_MIGRATE_MENU_PATH => array(
       'title' => t('Quick Backup Tab'),
-      'body' => t('Use this form to run simple manual backups of your database. Visit the !helppage for more help using this module', 
+      'body' => t('Use this form to run simple manual backups of your database. Visit the !helppage for more help using this module',
                   array('!helppage' => l(t('help page'), 'admin/help/backup_migrate'))),
       'access arguments' => array('perform backup'),
     ),
     BACKUP_MIGRATE_MENU_PATH . '/export/advanced' => array(
       'title' => t('Advanced Backup Tab'),
-      'body' => t('Use this form to run manual backups of your database with more advanced options. If you have any !profilelink saved you can load those settings. You can save any of the changes you make to these settings as a new settings profile.', 
+      'body' => t('Use this form to run manual backups of your database with more advanced options. If you have any !profilelink saved you can load those settings. You can save any of the changes you make to these settings as a new settings profile.',
                   array("!profilelink" => \Drupal::currentUser()->hasPermission('administer backup and migrate') ? l(t('settings profiles'), BACKUP_MIGRATE_MENU_PATH . '/profile') : t('settings profiles'), '!restorelink' => \Drupal::currentUser()->hasPermission('restore from backup') ? l(t('restore feature'), BACKUP_MIGRATE_MENU_PATH . '/restore') : t('restore feature'), '!phpmyadminurl' => 'http://www.phpmyadmin.net')),
       'access arguments' => array('perform backup'),
     ),
@@ -58,7 +58,7 @@ function backup_migrate_help($section, $arg) {
     ),
     BACKUP_MIGRATE_MENU_PATH . '/schedule' => array(
       'title' => t('Scheduling'),
-      'body' => t('Automatically backup up your database on a regular schedule using <a href="!cronurl">cron</a>.', 
+      'body' => t('Automatically backup up your database on a regular schedule using <a href="!cronurl">cron</a>.',
                   array('!cronurl' => 'http://drupal.org/cron')),
       'more' => t('Each schedule will run a maximum of once per cron run, so they will not run more frequently than your cron is configured to run. If you specify a number of backups to keep for a schedule, old backups will be deleted as new ones created. <strong>If specifiy a number of files to keep other backup files in that schedule\'s destination will get deleted</strong>.'),
       'access arguments' => array('administer backup and migrate'),
@@ -189,7 +189,7 @@ function backup_migrate_include() {
     if (!isset($used[$file])) {
       require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'backup_migrate') . "/includes/$file.inc";
     }
-  
+
     $used[$file] = TRUE;
   }
 }
@@ -290,7 +290,7 @@ function backup_migrate_perform_backup(&$settings) {
     return FALSE;
   }
 
-  // Backup succeeded, 
+  // Backup succeeded,
   $time = timer_stop('backup_migrate_backup');
   $message = '%source backed up successfully to %file in destination %dest in !time ms. !action';
   $params = array(
@@ -602,7 +602,7 @@ function _backup_migrate_check_timeout() {
  * Convert an associated array to an ini format string.
  */
 function _backup_migrate_array_to_ini($data, $prefix = '') {
-  $content = ""; 
+  $content = "";
   foreach ($data as $key => $val) {
     if ($prefix) {
       $key = $prefix . '[' . $key .']';
@@ -648,7 +648,7 @@ function backup_migrate_parse_info_file($filename) {
 
 /**
  * Parse an old fashioned ini-style info data.
- * 
+ *
  * This is copied from D7 because B&M relies on that formatting.
  */
 function backup_migrate_parse_ini_format($data) {

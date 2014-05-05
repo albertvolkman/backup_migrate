@@ -152,7 +152,7 @@ function _backup_migrate_ui_backup_settings_form_validate($form, &$form_state) {
 function _backup_migrate_ui_backup_settings_form_submit($form, &$form_state) {
   backup_migrate_filters_settings_form_submit('backup', $form, $form_state);
 }
-  
+
 /**
  * Get the default profile.
  */

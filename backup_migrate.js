@@ -1,7 +1,7 @@
 
 (function ($) {
 Drupal.backup_migrate = {
-  callbackURL : "",  
+  callbackURL : "",
   autoAttach  : function() {
     if (Drupal.settings.backup_migrate !== undefined) {
       if ($("#edit-save-settings").length && !$("#edit-save-settings").is(":checked")) {
@@ -9,7 +9,7 @@ Drupal.backup_migrate = {
         // Set display none instead of using hide(), because hide() doesn't work when parent is hidden.
         $('div.backup-migrate-save-options').css('display', 'none');
       }
-  
+
       $("#edit-save-settings").bind("click", function() {
         if (!$("#edit-save-settings").is(":checked")) {
           $("div.backup-migrate-save-options").slideUp('slow');

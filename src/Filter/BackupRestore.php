@@ -79,7 +79,7 @@ class BackupRestore extends FilterBase {
     backup_migrate_include('destinations');
     $out = array('destinations' => array(
       '#tree' => TRUE,
-      
+
     ));
     foreach (backup_migrate_get_destinations('source') as $destination) {
       $destination_settings = (array)(@$settings['destinations'][$destination->get_id()]) + $settings;

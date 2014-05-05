@@ -41,7 +41,7 @@ class Schedule extends ItemBase {
 
   /**
    * Get the columns needed to list the type.
-   */  
+   */
   function get_list_column_info() {
     $out = parent::get_list_column_info();
     $out = array(
@@ -351,10 +351,10 @@ class Schedule extends ItemBase {
             $files[str_pad($file->info('filetime'), 10, "0", STR_PAD_LEFT) ."-". $i++] = $file;
           }
         }
-  
+
         // If we are beyond our limit, remove as many as we need.
         $num_files = count($files);
-  
+
         if ($num_files > $num_to_keep) {
           $num_to_delete = $num_files - $num_to_keep;
           // Sort by date.

@@ -295,7 +295,7 @@ class DestinationBase extends ItemBase {
 
   /**
    * Get the columns needed to list the type.
-   */  
+   */
   function get_list_column_info() {
     $out = parent::get_list_column_info();
     $out = array(
@@ -308,7 +308,7 @@ class DestinationBase extends ItemBase {
 
   /**
    * Get a row of data to be used in a list of items of this type.
-   */  
+   */
   function get_list_row() {
     $out = parent::get_list_row();
 
@@ -399,7 +399,7 @@ class DestinationBase extends ItemBase {
   function settings_form_submit($form_values) {
     return $form_values;
   }
-  
+
 
   /**
    * Create a new destination of the correct type.

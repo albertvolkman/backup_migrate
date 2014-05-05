@@ -165,7 +165,7 @@ class Encryption extends FilterBase {
           return $file;
         break;
     }
-  
+
       if (!$success) {
         if (function_exists('aes_decrypt')) {
           _backup_migrate_message("Could not decrpyt backup file. Please check that the file is valid and that the encryption key of the server matches the server that created the backup.", array(), 'error');

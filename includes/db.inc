@@ -165,7 +165,7 @@ function _backup_migrate_db_get_db_type($scheme) {
         $type = 'mysql';
         backup_migrate_include('db.mysql');
       break;
-      default: 
+      default:
         $type = false;
       break;
     }

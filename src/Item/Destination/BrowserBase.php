@@ -12,7 +12,7 @@ use Drupal\backup_migrate\Item\Destination\DestinationBase;
 class BrowserBase extends DestinationBase {
   /**
    * Get a row of data to be used in a list of items of this type.
-   */  
+   */
   function get_list_row() {
     // Return none as this type should not be displayed.
     return array();

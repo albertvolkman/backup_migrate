@@ -302,7 +302,7 @@ class RemoteDBMysql extends RemoteDB {
     }
     return $out;
   }
-  
+
   /**
    *  Get the sql to insert the data for a given table
    */
@@ -310,7 +310,7 @@ class RemoteDBMysql extends RemoteDB {
     $config = \Drupal::config('backup_migrate.settings');
     $rows_per_line = $config->get('data.rows_per_line', 30);
     $bytes_per_line = $config->get('data.bytes_per_line', 30);
-  
+
     $lines = 0;
     $data = $this->query("SELECT * FROM `". $table['name'] ."`", array(), array('fetch' => \PDO::FETCH_ASSOC));
     $rows = $bytes = 0;
@@ -318,7 +318,7 @@ class RemoteDBMysql extends RemoteDB {
     // Escape backslashes, PHP code, special chars
     $search = array('\\', "'", "\x00", "\x0a", "\x0d", "\x1a");
     $replace = array('\\\\', "''", '\0', '\n', '\r', '\Z');
-  
+
     $line = array();
     foreach ($data as $row) {
       // DB Escape the values.
@@ -326,7 +326,7 @@ class RemoteDBMysql extends RemoteDB {
       foreach ($row as $key => $value) {
         $items[] = is_null($value) ? "null" : "'". str_replace($search, $replace, $value) ."'";
       }
-  
+
       // If there is a row to be added.
       if ($items) {
         // Start a new line if we need to.
@@ -338,13 +338,13 @@ class RemoteDBMysql extends RemoteDB {
         else {
           $file->write(",");
         }
-  
+
         // Write the data itself.
         $sql = implode(',', $items);
         $file->write('('. $sql .')');
         $bytes += strlen($sql);
         $rows++;
-  
+
         // Finish the last line if we've added enough items
         if ($rows >= $rows_per_line || $bytes >= $bytes_per_line) {
           $file->write(";\n");
@@ -358,7 +358,7 @@ class RemoteDBMysql extends RemoteDB {
       $file->write(";\n");
       $lines++;
     }
-  
+
     return $lines;
   }
 
@@ -399,13 +399,13 @@ SET NAMES utf8;
 
 ";
   }
-  
+
   /**
    * The footer of the sql dump file.
    */
   function _get_sql_file_footer() {
     return "
-  
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

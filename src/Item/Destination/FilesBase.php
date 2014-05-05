@@ -32,7 +32,7 @@ class FilesBase extends DestinationBase {
       if ($dir = $this->check_dir($dir)) {
         $filepath = rtrim($dir, "/") ."/". $file->filename();
         if (file_unmanaged_move($file->filepath(), $filepath)) {
-  
+
           // chmod, chown and chgrp the file if needed.
           if ($chmod = $this->settings('chmod')) {
             if (!@drupal_chmod($filepath, octdec($chmod))) {

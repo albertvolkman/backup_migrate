@@ -3,7 +3,7 @@
 use Drupal\Core\Database\Database;
 
 /**
- * Get the sql dump file. 
+ * Get the sql dump file.
  *
  *  Returns a list of sql commands, one command per line.
  *  That makes it easier to import without loading the whole file into memory.
