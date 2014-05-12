@@ -4,11 +4,11 @@ backup_migrate.add_destination:
   appears_on:
     - 'backup_migrate.destination'
 
-backup_migrate.add_profile:
-  route_name: backup_migrate.profile_add
+backup_migrate_profile.add:
+  route_name: backup_migrate_profile.add
   title: 'Add profile'
   appears_on:
-    - 'backup_migrate.profile'
+    - 'backup_migrate_profile.list'
 
 backup_migrate.add_schedule:
   route_name: backup_migrate.schedule_add

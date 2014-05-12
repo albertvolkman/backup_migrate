@@ -28,11 +28,11 @@ backup_migrate.destination_files:
   base_route: backup_migrate.export
   weight: 3
 
-#backup_migrate.profile:
-#  route_name: backup_migrate.profile
-#  title: 'Profiles'
-#  base_route: backup_migrate.export
-#  weight: 3
+backup_migrate_profile:
+  route_name: backup_migrate_profile.list
+  title: 'Profiles'
+  base_route: backup_migrate.export
+  weight: 3
 
 backup_migrate_schedule_tab:
   route_name: backup_migrate.schedule

@@ -176,6 +176,8 @@ function backup_migrate_schema() {
  */
 function backup_migrate_install() {
   _backup_migrate_setup_database_defaults();
+  $site_name = \Drupal::config('system.site')->get('name');
+  \Drupal::config('backup_migrate.profile.default')->set('filename', $site_name)->save();
 }
 
 function _backup_migrate_setup_database_defaults() {

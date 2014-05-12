@@ -53,3 +53,35 @@ backup_migrate.destination_download_file:
     _title: 'Download File'
   requirements:
     _permission: 'access backup files'
+
+backup_migrate_profile.list:
+  path: 'admin/config/system/backup_migrate/profile'
+  defaults:
+    _entity_list: 'backup_migrate_profile'
+    _title: 'Profiles'
+  requirements:
+    _permission: 'administer backup and migrate'
+
+backup_migrate_profile.add:
+  path: 'admin/config/system/backup_migrate/profile/add'
+  defaults:
+    _entity_form: 'backup_migrate_profile.add'
+    _title: 'Add profile'
+  requirements:
+    _entity_create_access: 'backup_migrate_profile'
+
+backup_migrate_profile.edit:
+  path: 'admin/config/system/backup_migrate/profile/{backup_migrate_profile}'
+  defaults:
+    _entity_form: 'backup_migrate_profile.edit'
+    _title: 'Edit profile'
+  requirements:
+    _entity_access: 'backup_migrate_profile.edit'
+
+backup_migrate_profile.delete:
+  path: 'admin/config/system/backup_migrate/profile/{backup_migrate_profile}/delete'
+  defaults:
+    _entity_form: 'backup_migrate_profile.delete'
+    _title: 'Delete profile'
+  requirements:
+    _entity_access: 'backup_migrate_profile.delete'

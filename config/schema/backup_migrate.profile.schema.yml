@@ -1,0 +1,22 @@
+backup_migrate.profile.*:
+  type: mapping
+  label: 'Profile'
+  mapping:
+    id:
+      type: string
+      label: 'Profile ID'
+    uuid:
+      type: string
+      label: 'UUID'
+    label:
+      type: label
+      label: 'Label'
+    filename:
+      type: string
+      label: 'Backup filename'
+    append_timestamp:
+      type: boolean
+      label: 'Append a timestamp'
+    timestamp_format:
+      type: string
+      label: 'Timestamp format'

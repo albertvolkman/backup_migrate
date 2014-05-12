@@ -5,7 +5,7 @@
  * All of the filter handling code needed for Backup and Migrate.
  */
 
-use backup_migrate\src\Filter;
+use Drupal\backup_migrate\Filter;
 
 /**
  * Get the available destination types.
